@@ -1,7 +1,7 @@
 enum MenuTab {
   about(title: "About"), 
-  contact(title: "Contact"), 
-  projects(title: "Projects");
+  projects(title: "Projects"),
+  contact(title: "Contact"),;
 
   const MenuTab({
     required this.title

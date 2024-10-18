@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../components/text.dart';
 import '../models/menu_tab.dart';
 
 
@@ -10,7 +12,15 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
-  static const String tabTitle = "Haryo Bimo";
+  static const String title = "Haryo Bimo";
+  static const double titleSize = 25.0;
+  static const double tabTitleSize = 18.0;
+  static const double tabWidth = 400.0;
+  static const double titleLeftMargin = 100.0;
+  static const double toolbarHeight = 100.0;
+  static const double tabRightMargin = 100.0;
+
+  late double screenWidth;
   late TabController _tabController;
 
   @override
@@ -30,15 +40,34 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(tabTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: MenuTab.values.map<Widget>((val) {
-            return Tab(text: val.title);
-          }).toList(),
-        ),
+        toolbarHeight: toolbarHeight,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                left: titleLeftMargin,
+              ),
+              child: const StylizedText(title, titleSize, FontWeight.bold),
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                right: tabRightMargin,
+              ),
+              width: tabWidth,
+              child: TabBar(
+                dividerColor: Colors.transparent,
+                controller: _tabController,
+                tabs: MenuTab.values.map<Widget>((val) {
+                  return Tab(child: StylizedText(val.title, tabTitleSize, FontWeight.w600));
+                }).toList(),
+              ),
+            ),
+          ]
+        )
       ),
       body: TabBarView(
         controller: _tabController,
