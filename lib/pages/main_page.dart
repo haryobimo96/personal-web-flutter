@@ -17,6 +17,7 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
   static const double tabTitleSize = 18.0;
   static const double tabWidth = 400.0;
   static const double titleLeftMargin = 100.0;
+  static const double titleRightMargin = 100.0;
   static const double toolbarHeight = 100.0;
   static const double tabRightMargin = 100.0;
 
@@ -50,21 +51,31 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
             Container(
               margin: const EdgeInsets.only(
                 left: titleLeftMargin,
+                right: titleRightMargin
               ),
-              child: const StylizedText(title, titleSize, FontWeight.bold),
+              child: const StylizedText(title, titleSize, FontWeight.bold, null),
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                right: tabRightMargin,
-              ),
-              width: tabWidth,
-              child: TabBar(
-                dividerColor: Colors.transparent,
-                controller: _tabController,
-                tabs: MenuTab.values.map<Widget>((val) {
-                  return Tab(child: StylizedText(val.title, tabTitleSize, FontWeight.w600));
-                }).toList(),
-              ),
+            Expanded(
+              flex: 1, 
+              child: Container()
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(
+                margin: const EdgeInsets.only(
+                  right: tabRightMargin,
+                ),
+                width: tabWidth,
+                child: TabBar(
+                  dividerColor: Colors.transparent,
+                  controller: _tabController,
+                  tabs: MenuTab.values.map<Widget>((val) {
+                    return Tab(
+                      child: StylizedText(
+                        val.title, tabTitleSize, FontWeight.w600, TextOverflow.ellipsis));
+                  }).toList(),
+                ),
+              )
             ),
           ]
         )
@@ -74,11 +85,11 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
         children: MenuTab.values.map<Widget>((val) {
           switch (val) {
             case MenuTab.about:
-              return Container(color: Colors.grey); // Example content
+              return Container(color: Colors.grey); 
             case MenuTab.contact:
-              return Container(color: Colors.grey); // Example content
+              return Container(color: Colors.amber); 
             case MenuTab.projects:
-              return Container(color: Colors.grey); // Example content
+              return Container(color: Colors.brown); 
           }
         }).toList(),
       ),
